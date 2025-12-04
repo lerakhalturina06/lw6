@@ -1,0 +1,11 @@
+{
+    "name": "yourname/bank-account",
+    "description": "Bank account with exception handling",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Bank\\": "src/"
+        }
+    },
+    "require": {}
+}
