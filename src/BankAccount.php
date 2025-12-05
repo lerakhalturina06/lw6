@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bank;
 
 use Bank\Exceptions\InvalidAmountException;
@@ -10,6 +12,7 @@ class BankAccount
     private float $balance;
 
     /**
+     * Конструктор счета
      * @param float $initialBalance Начальный баланс
      * @throws InvalidAmountException Если начальный баланс отрицательный
      */
@@ -24,7 +27,7 @@ class BankAccount
 
     /**
      * Возвращает текущий баланс
-     * @return float
+     * @return float Текущий баланс счета
      */
     public function getBalance(): float
     {
@@ -35,6 +38,7 @@ class BankAccount
      * Пополняет счет
      * @param float $amount Сумма для пополнения
      * @throws InvalidAmountException Если сумма отрицательная или равна нулю
+     * @return void
      */
     public function deposit(float $amount): void
     {
@@ -50,6 +54,7 @@ class BankAccount
      * @param float $amount Сумма для снятия
      * @throws InvalidAmountException Если сумма отрицательная или равна нулю
      * @throws InsufficientFundsException Если сумма превышает баланс
+     * @return void
      */
     public function withdraw(float $amount): void
     {
@@ -59,10 +64,26 @@ class BankAccount
         
         if ($amount > $this->balance) {
             throw new InsufficientFundsException(
-                "Невозможно снять $amount ₽. Доступный баланс: " . $this->balance . " ₽"
+                "Невозможно снять {$amount} ₽. Доступный баланс: {$this->balance} ₽"
             );
         }
         
         $this->balance -= $amount;
+    }
+
+    /**
+     * Переводит средства на другой счет
+     * @param BankAccount $toAccount Счет получателя
+     * @param float $amount Сумма перевода
+     * @throws InvalidAmountException Если сумма отрицательная или равна нулю
+     * @throws InsufficientFundsException Если сумма превышает баланс
+     * @return bool True если перевод успешен
+     */
+    public function transfer(self $toAccount, float $amount): bool
+    {
+        $this->withdraw($amount);
+        $toAccount->deposit($amount);
+        
+        return true;
     }
 }
