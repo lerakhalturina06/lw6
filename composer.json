@@ -1,11 +1,20 @@
 {
-    "name": "yourname/bank-account",
-    "description": "Bank account with exception handling",
+    "name": "bank/bank-account",
+    "description": "Bank account implementation with strict typing and exception handling",
     "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
     "autoload": {
         "psr-4": {
             "Bank\\": "src/"
         }
     },
-    "require": {}
+    "authors": [
+        {
+            "name": "lerakhalturina06",
+            "email": "ваш-email@example.com"
+        }
+    ],
+    "minimum-stability": "stable"
 }
